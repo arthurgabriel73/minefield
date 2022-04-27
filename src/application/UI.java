@@ -1,10 +1,6 @@
 package application;
 
-import java.util.List;
-
 import field.Content;
-import field.Field;
-import field.Position;
 import field.Slot;
 import game.Game;
 
@@ -36,23 +32,23 @@ public class UI {
 		System.out.print("\033[H\033[2J");
 		System.out.flush();
 	}
-	
+
 	public static void printGame(Game game) {
 		printField(game.getSlot());
 		System.out.println("");
 	}
-	
+
 	public static void printField(Slot[][] slot) {
-		for(int i=0; i<slot.length; i++){
+		for (int i = 0; i < slot.length; i++) {
 			System.out.print((8 - i) + " ");
-			for(int j=0; j<slot.length; j++) {
+			for (int j = 0; j < slot.length; j++) {
 				printSlot(slot[i][j]);
-			}	
+			}
 			System.out.println();
 		}
 		System.out.println("  a b c d e f g h");
 	}
-	
+
 	private static void printSlot(Slot slot) {
 		Content content = new Content();
 		System.out.print(content + " ");

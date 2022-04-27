@@ -1,16 +1,15 @@
 package field;
 
-
 public class Field {
 
 	private int rows;
 	private int columns;
 	private Slot[][] slot;
-	
+
 	public Field() {
-		
+
 	}
-	
+
 	public Field(int rows, int columns) {
 		this.rows = rows;
 		this.columns = columns;
@@ -40,10 +39,9 @@ public class Field {
 	public void setSlot(Slot[][] slot) {
 		this.slot = slot;
 	}
-	
+
 	public Slot slot(int row, int column) {
 		return slot[row][column];
 	}
-	
-	
+
 }
