@@ -43,5 +43,15 @@ public class Minefield {
 	public Slot slot(int row, int column) {
 		return slot[row][column];
 	}
+	
+	public Slot[][] getMinefieldMatrix() {
+		Slot[][] minefieldMatrix = new Slot[rows][columns];
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < columns; j++) {
+				minefieldMatrix[i][j] = (Slot) slot(i, j);
+			}
+		}
+		return minefieldMatrix;
+	}
 
 }

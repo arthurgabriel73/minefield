@@ -1,5 +1,6 @@
 package application;
 
+import field.Minefield;
 import field.Slot;
 import game.Game;
 
@@ -33,10 +34,11 @@ public class UI {
 	}
 
 	public static void printGame(Game game) {
-		printField(game.getMinefieldMatrix());
+		Minefield minefield = new Minefield(8, 8);
+		printField(minefield.getMinefieldMatrix());
 		System.out.println("");
 	}
-
+	
 	public static void printField(Slot[][] slot) {
 		for (int i = 0; i < slot.length; i++) {
 			System.out.print((i+1) + " ");

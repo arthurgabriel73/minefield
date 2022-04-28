@@ -1,7 +1,7 @@
 package game;
 
 import field.Minefield;
-import field.Slot;
+//import field.Slot;
 
 public class Game {
 
@@ -11,7 +11,6 @@ public class Game {
 	private Minefield field;
 
 	public Game() {
-		field = new Minefield(8, 8);
 		isAlive = true;
 	}
 
@@ -37,15 +36,5 @@ public class Game {
 
 	public void setField(Minefield field) {
 		this.field = field;
-	}
-
-	public Slot[][] getMinefieldMatrix() {
-		Slot[][] minefield = new Slot[field.getRows()][field.getColumns()];
-		for (int i = 0; i < field.getRows(); i++) {
-			for (int j = 0; j < field.getColumns(); j++) {
-				minefield[i][j] = (Slot) field.slot(i, j);
-			}
-		}
-		return minefield;
 	}
 }
