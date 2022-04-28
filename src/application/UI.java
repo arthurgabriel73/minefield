@@ -61,5 +61,5 @@ public class UI {
 			boolString = "O";
 		}else boolString = "X";
 		System.out.print(boolString + " ");
-		}
+	}
 }

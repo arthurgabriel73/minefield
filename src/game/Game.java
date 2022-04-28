@@ -13,7 +13,7 @@ public class Game {
 	Random rand = new Random();
 	Slot slot = new Slot();
 	Minefield minefield = new Minefield();
-	
+
 	public Game() {
 		isAlive = true;
 	}
@@ -42,29 +42,24 @@ public class Game {
 		this.minefield = minefield;
 	}
 
-	public boolean isThereABomb() {
-		int bombCount;
-		boolean bomb = false;
+	public void isThereABomb(Slot slot) {
 		
-		for(bombCount=0; bombCount<16;) {
-		for (int i = 0; i < minefield.getRows(); i++) {
-			for (int j = 0; j < minefield.getColumns(); j++) {
-				int r = rand.nextInt(6);
+		for (int bombCount = 0; bombCount < 16;) {
+			for (int i = 0; i < minefield.getRows(); i++) {
+				for (int j = 0; j < minefield.getColumns(); j++) {
+					
+					int r = rand.nextInt(6);
+					if (r == 0) {
+						bombCount++;
 
-				if (r == 0) {
-					bombCount += 1;
-					bomb = true;
-					slot.setContent(true);
-
-				} else {
-					bomb = false;
-					slot.setContent(false);
+						slot.setContent(true);
+					} else {
+						slot.setContent(false);
+					}
 				}
 			}
 		}
-	}return bomb;
-		
-		
+
 	}
 
 }
