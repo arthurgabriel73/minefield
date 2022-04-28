@@ -1,40 +1,59 @@
 package field;
 
-public class Slot {
+import java.util.Random;
 
-	private Content content;
+public class Slot {
+	
+	private boolean content;
 	private boolean status;
 
 	public Slot() {
 
 	}
 
-	public Slot(Content content, boolean status) {
+	public Slot(boolean content, boolean status) {
 		this.content = content;
 		this.status = status;
 	}
 
-	public Content getContent() {
+	public boolean isContent() {
 		return content;
 	}
 
-	public boolean getPosition() {
+	public void setContent(boolean content) {
+		this.content = content;
+	}
+
+	public boolean isStatus() {
 		return status;
 	}
 
-	public boolean isThereABomb(Content content) {
-		return false;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
-	public void howManyBombsAround(int amount) {
+	public boolean isThereABomb() {
 
+		Random random = new Random();
+		int r = random.nextInt(6);
+
+		if (r == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-
+	
 	@Override
 	public String toString() {
-		Content content = new Content();
 
-		return String.format("" + content);
+		if (isThereABomb() == true) {
+			char c = 'B';
+			return String.format("" + c);
+		} else {
+			char c = 'O';
+			return String.format("" + c);
+		}
 	}
 
 }

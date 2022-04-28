@@ -1,6 +1,5 @@
 package application;
 
-import field.Content;
 import field.Slot;
 import game.Game;
 
@@ -50,7 +49,7 @@ public class UI {
 	}
 
 	private static void printSlot(Slot slot) {
-		Content content = new Content();
+		Slot content = new Slot();
 		System.out.print(content + " ");
 	}
 }
