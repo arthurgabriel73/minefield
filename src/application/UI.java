@@ -6,6 +6,7 @@ import game.Game;
 
 public class UI {
 
+	Game game = new Game();
 	// https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
 
 	public static final String ANSI_RESET = "\u001B[0m";
@@ -35,15 +36,17 @@ public class UI {
 
 	public static void printGame(Game game) {
 		Minefield minefield = new Minefield(8, 8);
-		printField(minefield.getMinefieldMatrix());
+		printField(minefield.generateMinefieldMatrix());
 		System.out.println("");
 	}
 	
 	public static void printField(Slot[][] slot) {
 		for (int i = 0; i < slot.length; i++) {
+			System.out.print(ANSI_BLUE);
 			System.out.print((i+1) + " ");
 			for (int j = 0; j < slot.length; j++) {
 				printSlot(slot[i][j]);
+				
 			}
 			System.out.println();
 		}
@@ -51,7 +54,12 @@ public class UI {
 	}
 
 	private static void printSlot(Slot slot) {
-		Slot content = new Slot();
-		System.out.print(content + " ");
-	}
+		slot = new Slot();
+		String boolString;
+		boolean bool = slot.getContent();
+		if (bool == false) {
+			boolString = "O";
+		}else boolString = "X";
+		System.out.print(boolString + " ");
+		}
 }

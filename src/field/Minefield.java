@@ -44,7 +44,7 @@ public class Minefield {
 		return slot[row][column];
 	}
 	
-	public Slot[][] getMinefieldMatrix() {
+	public Slot[][] generateMinefieldMatrix() {
 		Slot[][] minefieldMatrix = new Slot[rows][columns];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
@@ -53,5 +53,4 @@ public class Minefield {
 		}
 		return minefieldMatrix;
 	}
-
 }

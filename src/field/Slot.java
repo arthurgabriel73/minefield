@@ -1,6 +1,5 @@
 package field;
 
-import java.util.Random;
 
 public class Slot {
 	
@@ -19,6 +18,9 @@ public class Slot {
 	public boolean isContent() {
 		return content;
 	}
+	public boolean getContent() {
+		return content;
+	}
 
 	public void setContent(boolean content) {
 		this.content = content;
@@ -31,29 +33,4 @@ public class Slot {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
-	public boolean isThereABomb() {
-
-		Random random = new Random();
-		int r = random.nextInt(6);
-
-		if (r == 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	@Override
-	public String toString() {
-
-		if (isThereABomb() == true) {
-			char c = 'B';
-			return String.format("" + c);
-		} else {
-			char c = 'O';
-			return String.format("" + c);
-		}
-	}
-
 }
