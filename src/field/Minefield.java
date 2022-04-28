@@ -1,16 +1,16 @@
 package field;
 
-public class Field {
+public class Minefield {
 
 	private int rows;
 	private int columns;
 	private Slot[][] slot;
 
-	public Field() {
+	public Minefield() {
 
 	}
 
-	public Field(int rows, int columns) {
+	public Minefield(int rows, int columns) {
 		this.rows = rows;
 		this.columns = columns;
 		slot = new Slot[rows][columns];

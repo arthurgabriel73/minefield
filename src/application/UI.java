@@ -34,13 +34,13 @@ public class UI {
 	}
 
 	public static void printGame(Game game) {
-		printField(game.getSlot());
+		printField(game.getMinefieldMatrix());
 		System.out.println("");
 	}
 
 	public static void printField(Slot[][] slot) {
 		for (int i = 0; i < slot.length; i++) {
-			System.out.print((8 - i) + " ");
+			System.out.print((i+1) + " ");
 			for (int j = 0; j < slot.length; j++) {
 				printSlot(slot[i][j]);
 			}

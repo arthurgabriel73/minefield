@@ -3,23 +3,23 @@ package field;
 public class Slot {
 
 	private Content content;
-	private Position position;
+	private boolean status;
 
 	public Slot() {
 
 	}
 
-	public Slot(Content content, Position position) {
+	public Slot(Content content, boolean status) {
 		this.content = content;
-		this.position = position;
+		this.status = status;
 	}
 
 	public Content getContent() {
 		return content;
 	}
 
-	public Position getPosition() {
-		return position;
+	public boolean getPosition() {
+		return status;
 	}
 
 	public boolean isThereABomb(Content content) {

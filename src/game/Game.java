@@ -1,6 +1,6 @@
 package game;
 
-import field.Field;
+import field.Minefield;
 import field.Slot;
 
 public class Game {
@@ -8,10 +8,10 @@ public class Game {
 	private boolean isAlive;
 	private boolean winner;
 
-	private Field field;
+	private Minefield field;
 
 	public Game() {
-		field = new Field(8, 8);
+		field = new Minefield(8, 8);
 		isAlive = true;
 	}
 
@@ -31,21 +31,21 @@ public class Game {
 		this.winner = winner;
 	}
 
-	public Field getField() {
+	public Minefield getField() {
 		return field;
 	}
 
-	public void setField(Field field) {
+	public void setField(Minefield field) {
 		this.field = field;
 	}
 
-	public Slot[][] getSlot() {
-		Slot[][] mat = new Slot[field.getRows()][field.getColumns()];
+	public Slot[][] getMinefieldMatrix() {
+		Slot[][] minefield = new Slot[field.getRows()][field.getColumns()];
 		for (int i = 0; i < field.getRows(); i++) {
 			for (int j = 0; j < field.getColumns(); j++) {
-				mat[i][j] = (Slot) field.slot(i, j);
+				minefield[i][j] = (Slot) field.slot(i, j);
 			}
 		}
-		return mat;
+		return minefield;
 	}
 }
