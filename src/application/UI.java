@@ -35,31 +35,33 @@ public class UI {
 	}
 
 	public static void printGame(Game game) {
-		Minefield minefield = new Minefield(8, 8);
-		printField(minefield.generateMinefieldMatrix());
-		System.out.println("");
+		Minefield minefield = new Minefield(8, 8, 16);
+		/*printField(minefield.generateMinefieldMatrix());
+		System.out.println("");*/
 	}
-	
-	public static void printField(Slot[][] slot) {
-		for (int i = 0; i < slot.length; i++) {
+
+	public static void printField(Slot[][] minefield) {
+		for (int i = 0; i < minefield.length; i++) {
 			System.out.print(ANSI_BLUE);
 			System.out.print((i+1) + " ");
-			for (int j = 0; j < slot.length; j++) {
-				printSlot(slot[i][j]);
-				
+			for (int j = 0; j < minefield.length; j++) {
+				printSlot(minefield[i][j]);
+
 			}
 			System.out.println();
 		}
-		System.out.println("  a b c d e f g h");
+		System.out.print("  a b c d e f g h");
 	}
 
 	private static void printSlot(Slot slot) {
-		slot = new Slot();
+		Minefield minefield = new Minefield();
 		String boolString;
 		boolean bool = slot.getContent();
 		if (bool == false) {
 			boolString = "O";
-		}else boolString = "X";
+		}
+		else boolString = "X";
+
 		System.out.print(boolString + " ");
 	}
 }

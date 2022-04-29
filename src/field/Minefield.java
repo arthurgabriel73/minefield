@@ -1,19 +1,28 @@
 package field;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Minefield {
 
 	private int rows;
 	private int columns;
-	private Slot[][] slot;
+	private int numberOfMines;
+	private Slot[][] minefieldMatrix;
 
 	public Minefield() {
 
 	}
 
-	public Minefield(int rows, int columns) {
+	Random rand = new Random();
+	Slot slot = new Slot();
+
+	public Minefield(int rows, int columns, int numberOfMines) {
 		this.rows = rows;
 		this.columns = columns;
-		slot = new Slot[rows][columns];
+		this.numberOfMines = numberOfMines;
+		this.generateMinefieldMatrix();
+
 	}
 
 	public int getRows() {
@@ -32,25 +41,56 @@ public class Minefield {
 		this.columns = columns;
 	}
 
-	public Slot[][] getSlot() {
-		return slot;
-	}
-
-	public void setSlot(Slot[][] slot) {
-		this.slot = slot;
-	}
-
-	public Slot slot(int row, int column) {
-		return slot[row][column];
-	}
-	
-	public Slot[][] generateMinefieldMatrix() {
-		Slot[][] minefieldMatrix = new Slot[rows][columns];
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < columns; j++) {
-				minefieldMatrix[i][j] = (Slot) slot(i, j);
+	private Slot[][] generateMinefieldMatrix() {
+		for (int i = 0; i < this.rows; i++) {
+			for (int j = 0; j < this.columns; j++) {
+				this.minefieldMatrix[i][j] = new Slot(false);
 			}
 		}
+		this.setMinesOnMinefield();
 		return minefieldMatrix;
+	}
+
+	//____________
+
+
+	public void mineList() {
+		ArrayList<Coords> minePlaces = new ArrayList<Coords>();
+		for (int i = 0; i < this.rows; i++) {
+			for (int j = 0; j < this.columns; j++) {
+				minePlaces.add(new Coords(i, j));
+
+			}
+		}
+
+
+		Random randomNumber = new Random();
+
+		int numberOfPlacedMines = 0;
+		while (numberOfPlacedMines < this.numberOfMines) {
+			int quantityOfSlots = this.rows*this.columns;
+			Coords randomMinePlace = minePlaces.get(rand.nextInt(quantityOfSlots));
+
+		/*	Slot randomSlot = this.minefieldMatrix
+			randomSlot.setMine()
+			minePLaces.remove(??? randomMinePlace)
+			numberOfPlacedMines += 1*/
+		}
+
+	}
+
+
+	private void getSlot(int rows, int columns) {
+
+
+	}
+
+
+	//____________
+
+	private void setMinesOnMinefield() {
+		int placedMinesCount = 0;
+		while(placedMinesCount < this.numberOfMines) {
+		}
 	}
 }

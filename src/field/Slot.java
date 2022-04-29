@@ -2,7 +2,7 @@ package field;
 
 
 public class Slot {
-	
+
 	private boolean content;
 	private boolean status;
 
@@ -15,15 +15,16 @@ public class Slot {
 		this.status = status;
 	}
 
-	public boolean isContent() {
-		return content;
+	public Slot(boolean content) {
+		this.content = content;
 	}
+
 	public boolean getContent() {
 		return content;
 	}
 
-	public void setContent(boolean content) {
-		this.content = content;
+	public void setMine(boolean mine) {
+		this.content = mine;
 	}
 
 	public boolean isStatus() {
