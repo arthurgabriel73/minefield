@@ -1,6 +1,8 @@
 package field;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Minefield {
@@ -14,7 +16,7 @@ public class Minefield {
 
 	}
 
-	Random rand = new Random();
+	Random randomNumber = new Random();
 	Slot slot = new Slot();
 
 	public Minefield(int rows, int columns, int numberOfMines) {
@@ -55,42 +57,32 @@ public class Minefield {
 
 
 	public void mineList() {
-		ArrayList<Coords> minePlaces = new ArrayList<Coords>();
+		List<ArrayList<Integer>> minePlaces = new ArrayList<>();
 		for (int i = 0; i < this.rows; i++) {
 			for (int j = 0; j < this.columns; j++) {
-				minePlaces.add(new Coords(i, j));
-
+				minePlaces.add(new ArrayList<>(Arrays.asList(i, j)));
 			}
 		}
 
-
-		Random randomNumber = new Random();
-
+		int quantityOfSlots = this.rows*this.columns;
 		int numberOfPlacedMines = 0;
 		while (numberOfPlacedMines < this.numberOfMines) {
-			int quantityOfSlots = this.rows*this.columns;
-			Coords randomMinePlace = minePlaces.get(rand.nextInt(quantityOfSlots));
+			 ArrayList<Integer> randomMinePlace = minePlaces.get(randomNumber.nextInt(quantityOfSlots));
 
-		/*	Slot randomSlot = this.minefieldMatrix
-			randomSlot.setMine()
-			minePLaces.remove(??? randomMinePlace)
-			numberOfPlacedMines += 1*/
+			Slot randomSlot = getSlot(minefieldMatrix);
+			setMinesOnMinefield(randomSlot);
+			minePlaces.remove(randomMinePlace);
+			numberOfPlacedMines += 1;
 		}
-
 	}
 
-
-	private void getSlot(int rows, int columns) {
-
-
+	public Slot getSlot(Slot[][] minefieldMatrix){
+		int i = randomNumber.nextInt(this.rows);
+		int j = randomNumber.nextInt(this.columns);
+		return minefieldMatrix[i][j];
 	}
 
-
-	//____________
-
-	private void setMinesOnMinefield() {
-		int placedMinesCount = 0;
-		while(placedMinesCount < this.numberOfMines) {
-		}
+	public void setMinesOnMinefield(Slot randomSlot){
+		slot.setMine(true);
 	}
 }
