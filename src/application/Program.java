@@ -1,17 +1,23 @@
 package application;
 
+import field.Minefield;
 import game.Game;
+
+import java.util.Scanner;
 
 public class Program {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		Game game = new Game();
+        Scanner sc = new Scanner(System.in);
+        Game game = new Game();
+        Minefield minefield = new Minefield();
 
-		UI.clearScreen();
-		System.out.println("\nGood Luck!\n");
+
+        UI.clearScreen();
+        System.out.println("\nGood Luck!\n");
 
 
-		UI.printGame(game);
-	}
+        UI.printGame(game);
+    }
 }
