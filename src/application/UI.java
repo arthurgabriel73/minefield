@@ -39,9 +39,9 @@ public class UI {
 
         System.out.print("Insert the number of mines: ");
         int numberOfMines = sc.nextInt();
-        System.out.print("How many rows and columns(R C)? ");
+        System.out.print("Set the minefield length: ");
         int rows = sc.nextInt();
-        int columns = sc.nextInt();
+        int columns = rows;
         Minefield minefield = new Minefield(rows, columns, numberOfMines);
 
         printField(minefield.generateMinefieldMatrix());
@@ -50,15 +50,22 @@ public class UI {
 
     public static void printField(Slot[][] minefieldMatrix) {
         for (int i = 0; i < minefieldMatrix.length; i++) {
-            System.out.print(ANSI_BLUE);
             System.out.print((i + 1) + " ");
             for (int j = 0; j < minefieldMatrix.length; j++) {
+                System.out.print(ANSI_BLACK_BACKGROUND);
+                System.out.print(ANSI_BLACK);
                 printSlot(minefieldMatrix[i][j]);
+                System.out.print(ANSI_RESET);
+
 
             }
             System.out.println();
         }
-        System.out.print("  a b c d e f g h");
+        System.out.print(ANSI_RESET + "  ");
+        for(int i = 1; i<= minefieldMatrix.length; i++) {
+
+            System.out.print(i + " ");
+        }
     }
 
     private static void printSlot(Slot slot) {
