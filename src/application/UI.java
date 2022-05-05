@@ -28,6 +28,7 @@ public class UI {
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
     Game game = new Game();
 
+
     // https://stackoverflow.com/questions/2979383/java-clear-the-console
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
@@ -44,10 +45,19 @@ public class UI {
         int columns = rows;
         Minefield minefield = new Minefield(rows, columns, numberOfMines);
 
-        printField(minefield.generateMinefieldMatrix());
-        System.out.println();
-    }
 
+            printField(minefield.generateMinefieldMatrix());
+            System.out.println();
+
+        while (game.isAlive() == true) {
+            System.out.print("Please select a slot to open(i j): ");
+            int i = sc.nextInt()-1;
+            int j = sc.nextInt()-1;
+            Slot chosenSlot = minefield.getMinefieldMatrix()[i][j];
+            game.setChosenSlot(chosenSlot);
+
+        }
+    }
     public static void printField(Slot[][] minefieldMatrix) {
         for (int i = 0; i < minefieldMatrix.length; i++) {
             System.out.print((i + 1) + " ");
@@ -77,5 +87,8 @@ public class UI {
         } else boolString = "X";
 
         System.out.print(boolString + " ");
+    }
+    private static void selectSlot(Slot chosenSlot){
+
     }
 }

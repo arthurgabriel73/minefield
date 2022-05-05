@@ -1,6 +1,7 @@
 package application;
 
 import field.Minefield;
+import field.Slot;
 import game.Game;
 
 import java.util.Scanner;

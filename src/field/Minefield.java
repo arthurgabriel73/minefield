@@ -39,6 +39,10 @@ public class Minefield {
         this.columns = columns;
     }
 
+    public Slot[][] getMinefieldMatrix() {
+        return minefieldMatrix;
+    }
+
     public Slot[][] generateMinefieldMatrix() {
         this.minefieldMatrix = new Slot[this.rows][this.columns];
         for (int i = 0; i < this.rows; i++) {
