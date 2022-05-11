@@ -50,12 +50,9 @@ public class Minefield {
                 this.minefieldMatrix[i][j] = new Slot(false);
             }
         }
-		this.placeMinesOnMinefield();
+        this.placeMinesOnMinefield();
         return minefieldMatrix;
     }
-
-    //____________
-
 
     private void placeMinesOnMinefield() {
         List<ArrayList<Integer>> minePlaces = new ArrayList<>();

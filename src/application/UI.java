@@ -44,26 +44,26 @@ public class UI {
         int rows = sc.nextInt();
         int columns = rows;
         Minefield minefield = new Minefield(rows, columns, numberOfMines);
-
-
-            printField(minefield.generateMinefieldMatrix());
+        while (game.isAlive()) {
+            UI.clearScreen();
+            UI.printField(minefield.generateMinefieldMatrix());
             System.out.println();
 
-        while (game.isAlive() == true) {
+
             System.out.print("Please select a slot to open(i j): ");
-            int i = sc.nextInt()-1;
-            int j = sc.nextInt()-1;
+            int i = sc.nextInt() - 1;
+            int j = sc.nextInt() - 1;
             Slot chosenSlot = minefield.getMinefieldMatrix()[i][j];
-            game.setChosenSlot(chosenSlot);
+            game.selectSlot(chosenSlot);
 
         }
     }
+
     public static void printField(Slot[][] minefieldMatrix) {
         for (int i = 0; i < minefieldMatrix.length; i++) {
             System.out.print((i + 1) + " ");
             for (int j = 0; j < minefieldMatrix.length; j++) {
-                System.out.print(ANSI_BLACK_BACKGROUND);
-                System.out.print(ANSI_BLACK);
+
                 printSlot(minefieldMatrix[i][j]);
                 System.out.print(ANSI_RESET);
 
@@ -79,16 +79,13 @@ public class UI {
     }
 
     private static void printSlot(Slot slot) {
-        Minefield minefield = new Minefield();
         String boolString;
         boolean bool = slot.getContent();
         if (!bool) {
             boolString = "O";
         } else boolString = "X";
-
+        System.out.print(ANSI_BLACK_BACKGROUND);
+        System.out.print(ANSI_BLACK);
         System.out.print(boolString + " ");
-    }
-    private static void selectSlot(Slot chosenSlot){
-
     }
 }

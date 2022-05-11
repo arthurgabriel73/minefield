@@ -1,36 +1,20 @@
 package game;
 
+import Input.InputHandler;
+import UI.UIHandler;
+import field.Minefield;
 import field.Slot;
 
 public class Game {
-
+    private InputHandler inputHandler;
     private boolean isAlive = true;
-    private Slot chosenSlot;
+    private UIHandler uiHandler;
+    private Minefield minefield;
 
     public Game() {
 
     }
 
-    public Game(boolean isAlive, Slot chosenSlot) {
-        this.isAlive = isAlive;
-        this.chosenSlot = chosenSlot;
-    }
-
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public void setAlive(boolean alive) {
-        isAlive = alive;
-    }
-
-    public Slot getChosenSlot() {
-        return chosenSlot;
-    }
-
-    public void setChosenSlot(Slot chosenSlot) {
-        this.chosenSlot = chosenSlot;
-    }
 
 
 }
