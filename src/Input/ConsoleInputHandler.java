@@ -9,22 +9,21 @@ public class ConsoleInputHandler implements InputHandler{
     @Override
     public Config getGameConfig() {
 
-        System.out.println("Select the field length: ");
-        String length = sc.nextLine();
-        int rows = printMessageUntilIntegerIsPassed(length);
-        System.out.println("Select the number of mines to be set up on the field: ");
+        int rows = printMessageUntilIntegerIsPassed("Select the number of rows: ");
+        int columns = printMessageUntilIntegerIsPassed("Select the number of columns: ");
+        System.out.print("Select the number of mines to be set up on the field: ");
         String numberOfMinesStr = sc.nextLine();
         int numberOfMines = printMessageUntilIntegerIsPassed(numberOfMinesStr);
 
-        return new Config(rows, rows, numberOfMines);
+        return new Config(rows, columns, numberOfMines);
     }
 
     @Override
     public Input getPlayerInput() {
 
-        System.out.println("Select a row: ");
+        System.out.print("Select a row: ");
         int row = this.sc.nextInt();
-        System.out.println("Select a column: ");
+        System.out.print("Select a column: ");
         int column = this.sc.nextInt();
 
         return new Input(row, column);
@@ -32,15 +31,16 @@ public class ConsoleInputHandler implements InputHandler{
 
     private Integer printMessageUntilIntegerIsPassed(String message) {
         int valueInt;
+        System.out.print(message);
         while (true) {
             try {
-                System.out.println(message);
-                String valueStr = this.sc.nextLine();
+                String valueStr = this.sc.next();
                 valueInt = Integer.parseInt(valueStr);
                 break;
             }
-            catch (NumberFormatException ignored) {}
-        }
-        return valueInt;
+            catch (NumberFormatException e) {
+                System.out.print("Please insert a valid value: ");
+            }
+        } return valueInt;
     }
 }

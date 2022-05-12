@@ -4,7 +4,6 @@ public interface InputHandler {
 
      Input getPlayerInput();
      Config getGameConfig();
-
 }
 
 

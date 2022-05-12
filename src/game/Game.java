@@ -33,8 +33,7 @@ public class Game {
     public void actOnPlayerInput() {
         Input input = this.inputHandler.getPlayerInput();
         this.minefield.activateSlot(input.selectedRow, input.selectedColumn);
-
-        // TODO: se receber uma mina tem que matar uma player aqui
+        this.isAlive = this.minefield.stillAlive(input.selectedRow, input.selectedColumn);
 
         ExposedMatrix exposedMatrix = this.minefield.getMinefieldState();
         this.uiHandler.renderGame(exposedMatrix);

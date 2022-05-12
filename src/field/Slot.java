@@ -10,7 +10,18 @@ public class Slot {
 
     public Slot(boolean content) {
         this.hasMine = content;
+    }
+
+    public Integer getHowManyMinesAroundMe() {
+        return howManyMinesAroundMe;
+    }
+
+    public void setHowManyMinesAroundMe(Integer howManyMinesAroundMe) {
         this.howManyMinesAroundMe = howManyMinesAroundMe;
+    }
+
+    public boolean isThereAMine() {
+        return hasMine;
     }
 
     public void setMine(boolean hasMine) {
@@ -21,65 +32,12 @@ public class Slot {
         return this.status;
     }
 
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     public boolean activate() {
         this.status = true;
         return this.hasMine;
     }
 }
-
-
-
-//    public Integer getHowManyMinesAroundMe() {
-//        int minesAround = 0;
-//
-//        for (int i = 0; i < slotMatrix.length; i++) {
-//            for (int j = 0; j < slotMatrix.length; j++) {
-//
-//                if (positionExists(i - 1, j - 1)) {
-//                    if (slotMatrix[i - 1][j - 1].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//                if (positionExists(i - 1, j)) {
-//                    if (slotMatrix[i - 1][j].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//                if (positionExists(i - 1, j + 1)) {
-//                    if (slotMatrix[i - 1][j + 1].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//                if (positionExists(i, j - 1)) {
-//                    if (slotMatrix[i][j - 1].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//                if (positionExists(i, j + 1)) {
-//                    if (slotMatrix[i][j + 1].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//                if (positionExists(i + 1, j - 1)) {
-//                    if (slotMatrix[i + 1][j - 1].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//                if (positionExists(i + 1, j)) {
-//                    if (slotMatrix[i + 1][j].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//                if (positionExists(i + 1, j + 1)) {
-//                    if (slotMatrix[i + 1][j + 1].getContent()) {
-//                        minesAround += 1;
-//                    }
-//                }
-//            }
-//        }
-//        return this.howManyMinesAroundMe = minesAround;
-//    }
-//
-//    private boolean positionExists(int row, int column) {
-//        return row >= 0 && row < slotMatrix.length && column >= 0 && column < slotMatrix.length;
-//    }
