@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 
 public interface UIHandler {
 
-    ExposedMatrix[][] renderGame(ExposedMatrix[][] exhibitonStateMatrix);
+    void renderGame(ExposedMatrix exposedMatrix);
 
 
     // UIHandler será uma interface que apenas possui um método chamado renderGame(), esse método recebe apenas

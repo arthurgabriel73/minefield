@@ -1,5 +1,7 @@
 package field;
 
+import UI.ExposedMatrix;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,45 +15,29 @@ public class Minefield {
     private int numberOfMines;
     private Slot[][] minefieldMatrix;
 
-    public Minefield() {
-
-    }
-
     public Minefield(int rows, int columns, int numberOfMines) {
         this.rows = rows;
         this.columns = columns;
         this.numberOfMines = numberOfMines;
+        this.generateMinefieldMatrix();
     }
 
-    public int getRows() {
-        return rows;
+    public void activateSlot(int row, int column) {
+
     }
 
-    public void setRows(int rows) {
-        this.rows = rows;
+    public ExposedMatrix getMinefieldState() {
+        return new ExposedMatrix(this.minefieldMatrix);
     }
 
-    public int getColumns() {
-        return columns;
-    }
-
-    public void setColumns(int columns) {
-        this.columns = columns;
-    }
-
-    public Slot[][] getMinefieldMatrix() {
-        return minefieldMatrix;
-    }
-
-    public Slot[][] generateMinefieldMatrix() {
+    private void generateMinefieldMatrix() {
         this.minefieldMatrix = new Slot[this.rows][this.columns];
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
-                this.minefieldMatrix[i][j] = new Slot(false);
+                this.minefieldMatrix[i][j] = new Slot(false, false, 0);
             }
         }
         this.placeMinesOnMinefield();
-        return minefieldMatrix;
     }
 
     private void placeMinesOnMinefield() {

@@ -26,7 +26,7 @@ public class UI {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-    Game game = new Game();
+
 
 
     // https://stackoverflow.com/questions/2979383/java-clear-the-console
@@ -38,54 +38,24 @@ public class UI {
     public static void printGame(Game game) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Insert the number of mines: ");
-        int numberOfMines = sc.nextInt();
-        System.out.print("Set the minefield length: ");
-        int rows = sc.nextInt();
-        int columns = rows;
-        Minefield minefield = new Minefield(rows, columns, numberOfMines);
-        while (game.isAlive()) {
+
+
+        while (game.isPlayerAlive()) {
             UI.clearScreen();
-            UI.printField(minefield.generateMinefieldMatrix());
+          //  (minefield.generateMinefieldMatrix());
             System.out.println();
 
 
             System.out.print("Please select a slot to open(i j): ");
             int i = sc.nextInt() - 1;
             int j = sc.nextInt() - 1;
-            Slot chosenSlot = minefield.getMinefieldMatrix()[i][j];
-            game.selectSlot(chosenSlot);
+          //  Slot chosenSlot = minefield.getMinefieldMatrix()[i][j];
+           // game.selectSlot(chosenSlot);
 
         }
     }
 
-    public static void printField(Slot[][] minefieldMatrix) {
-        for (int i = 0; i < minefieldMatrix.length; i++) {
-            System.out.print((i + 1) + " ");
-            for (int j = 0; j < minefieldMatrix.length; j++) {
-
-                printSlot(minefieldMatrix[i][j]);
-                System.out.print(ANSI_RESET);
 
 
-            }
-            System.out.println();
-        }
-        System.out.print(ANSI_RESET + "  ");
-        for(int i = 1; i<= minefieldMatrix.length; i++) {
 
-            System.out.print(i + " ");
-        }
-    }
-
-    private static void printSlot(Slot slot) {
-        String boolString;
-        boolean bool = slot.getContent();
-        if (!bool) {
-            boolString = "O";
-        } else boolString = "X";
-        System.out.print(ANSI_BLACK_BACKGROUND);
-        System.out.print(ANSI_BLACK);
-        System.out.print(boolString + " ");
-    }
 }

@@ -1,20 +1,42 @@
 package game;
 
+import Input.Config;
+import Input.Input;
 import Input.InputHandler;
+import UI.ExposedMatrix;
 import UI.UIHandler;
 import field.Minefield;
-import field.Slot;
 
 public class Game {
-    private InputHandler inputHandler;
-    private boolean isAlive = true;
-    private UIHandler uiHandler;
+    private final InputHandler inputHandler;
+    private final UIHandler uiHandler;
+    private boolean isAlive;
+
     private Minefield minefield;
 
-    public Game() {
-
+    public Game(InputHandler inputHandler, UIHandler uiHandler) {
+        this.isAlive = true;
+        this.uiHandler = uiHandler;
+        this.inputHandler = inputHandler;
+        this.startGame();
     }
 
+    public boolean isPlayerAlive() {
+        return this.isAlive;
+    }
 
+    public void startGame() {
+        Config config = this.inputHandler.getGameConfig();
+        this.minefield = new Minefield(config.gameRows(), config.gameColumns(), config.numberOfMines());
+    }
 
+    public void actOnPlayerInput() {
+        Input input = this.inputHandler.getPlayerInput();
+        this.minefield.activateSlot(input.selectedRow, input.selectedColumn);
+
+        // TODO: se receber uma mina tem que matar uma player aqui
+
+        ExposedMatrix exposedMatrix = this.minefield.getMinefieldState();
+        this.uiHandler.renderGame(exposedMatrix);
+    }
 }

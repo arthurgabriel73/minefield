@@ -10,13 +10,11 @@ public class ConsoleInputHandler implements InputHandler{
     public Config getGameConfig() {
 
         System.out.println("Select the field length: ");
-        boolean isNumber = false;
-
-
-        }
-
+        String length = sc.nextLine();
+        int rows = printMessageUntilIntegerIsPassed(length);
         System.out.println("Select the number of mines to be set up on the field: ");
-        int numberOfMines = this.sc.nextInt();
+        String numberOfMinesStr = sc.nextLine();
+        int numberOfMines = printMessageUntilIntegerIsPassed(numberOfMinesStr);
 
         return new Config(rows, rows, numberOfMines);
     }
