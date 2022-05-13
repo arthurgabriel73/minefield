@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Minefield {
 
@@ -76,23 +77,14 @@ public class Minefield {
 
     public void setNumberOfMinesAroundSlot(int row, int column) {
         int minesAround = 0;
-        int[][] positions = {
-                {row - 1, column - 1},
-                {row - 1, column},
-                {row - 1, column + 1},
-                {row, column - 1},
-                {row, column + 1},
-                {row + 1, column - 1},
-                {row + 1, column},
-                {row + 1, column + 1}
-        };
 
+        int[][] positions = getPositionsAroundSlot(row, column);
         Slot slot = this.getSlot(row, column);
 
         for (int[] position : positions) {
-//            Slot selectedSlot = this.getSlot(position[0], position[1]);
-            if (positionExists(position[0], position[1])
-                    && this.getSlot(position[0], position[1]).isThereAMine()) {
+            Slot selectedSlot = this.getSlot(position[0], position[1]);
+
+            if (selectedSlot.isThereAMine()) {
                 minesAround += 1;
             }
         }
@@ -104,26 +96,33 @@ public class Minefield {
         return slot.isThereAMine();
     }
 
-    private boolean positionExists(int row, int column) {
-        return row >=0 && row < rows && column >=0 && column < columns;
-    }
+    public int[][] getPositionsAroundSlot(int row, int column) {
 
-//    public int[][] getPositionsAroundSlot(int row, int column) {
-//
-//        int[][] positions = {
-//                {row - 1, column - 1},
-//                {row - 1, column},
-//                {row - 1, column + 1},
-//                {row, column - 1},
-//                {row, column + 1},
-//                {row + 1, column - 1},
-//                {row + 1, column},
-//                {row + 1, column + 1}
-//        };
-//        positions = (int[][]) Arrays.stream(positions)
-//                .filter(x -> x[0] >= 0 && x[0] < rows && x[1] >=0 && x[1] < columns)
-//                .toArray();
-//
-//        return positions;
-//    }
+        int[][] defaultPositions = {
+                {(row - 1),( column - 1)},
+                {(row - 1), (column)},
+                {(row - 1), (column + 1)},
+                {(row), (column - 1)},
+                {(row), (column + 1)},
+                {(row + 1), (column - 1)},
+                {(row + 1), (column)},
+                {(row + 1), (column + 1)}
+        };
+
+        int[] filteredPositions = Stream.of(defaultPositions)
+                .filter(i -> i[0] >= 0 && i[0] < rows && i[1]>=0 && i[1] < columns)
+                .flatMapToInt(i -> IntStream.of(i[0], i[1])).toArray();
+
+        int[][] positions = new int[filteredPositions.length/2][2];
+
+        int w = 0;
+        for(int i = 0; i < positions.length; i++) {
+            int j = 0;
+            positions[i][j] = filteredPositions[w];
+            positions[i][j + 1] = filteredPositions[w+1];
+            w++;
+            w++;
+        }
+        return positions;
+    }
 }
