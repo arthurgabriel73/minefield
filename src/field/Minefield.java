@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -109,20 +110,10 @@ public class Minefield {
                 {(row + 1), (column + 1)}
         };
 
-        int[] filteredPositions = Stream.of(defaultPositions)
+       int[][] positions =  Stream.of(defaultPositions)
                 .filter(i -> i[0] >= 0 && i[0] < rows && i[1]>=0 && i[1] < columns)
-                .flatMapToInt(i -> IntStream.of(i[0], i[1])).toArray();
+                .toArray(int[][]::new);
 
-        int[][] positions = new int[filteredPositions.length/2][2];
-
-        int w = 0;
-        for(int i = 0; i < positions.length; i++) {
-            int j = 0;
-            positions[i][j] = filteredPositions[w];
-            positions[i][j + 1] = filteredPositions[w+1];
-            w++;
-            w++;
-        }
         return positions;
     }
 }
