@@ -32,8 +32,9 @@ public class Slot {
         return this.status;
     }
 
-    public void setStatus(boolean status) {
+    public Slot setStatus(boolean status) {
         this.status = status;
+        return this;
     }
 
     public boolean activate() {

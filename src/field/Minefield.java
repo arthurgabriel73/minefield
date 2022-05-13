@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.IntFunction;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Minefield {
@@ -34,8 +31,12 @@ public class Minefield {
             }
         }
     }
+
     public void activateSlot(int row, int column) {
-        getSlot(row, column).setStatus(true);
+       Slot slot = getSlot(row, column).setStatus(true);
+       if (slot.getNumberOfMinesAround() == 0) {
+           this.revealPositionsAroundSlot(row, column);
+       }
     }
 
     public ExposedMatrix getMinefieldState() {
@@ -76,7 +77,7 @@ public class Minefield {
         return this.minefieldMatrix[row][column];
     }
 
-    public void setNumberOfMinesAroundSlot(int row, int column) {
+    private void setNumberOfMinesAroundSlot(int row, int column) {
         int minesAround = 0;
 
         int[][] positions = getPositionsAroundSlot(row, column);
@@ -97,7 +98,7 @@ public class Minefield {
         return slot.isThereAMine();
     }
 
-    public int[][] getPositionsAroundSlot(int row, int column) {
+    private int[][] getPositionsAroundSlot(int row, int column) {
 
         int[][] defaultPositions = {
                 {(row - 1),( column - 1)},
@@ -110,10 +111,22 @@ public class Minefield {
                 {(row + 1), (column + 1)}
         };
 
-       int[][] positions =  Stream.of(defaultPositions)
+       return Stream.of(defaultPositions)
                 .filter(i -> i[0] >= 0 && i[0] < rows && i[1]>=0 && i[1] < columns)
                 .toArray(int[][]::new);
+    }
 
-        return positions;
+    private void revealPositionsAroundSlot(int row, int column) {
+        int[][] positionsAroundThisSlot = this.getPositionsAroundSlot(row, column) ;
+        for (int[] position : positionsAroundThisSlot) {
+            Slot selectedSlot = this.getSlot(position[0], position[1]);
+            if (selectedSlot.isThereAMine() || selectedSlot.isOpen()) {
+                continue;
+            }
+            selectedSlot.activate();
+            if (selectedSlot.getNumberOfMinesAround() == 0) {
+                this.revealPositionsAroundSlot(position[0], position[1]);
+            }
+        }
     }
 }
