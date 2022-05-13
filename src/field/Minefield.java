@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Minefield {
 
@@ -21,22 +23,17 @@ public class Minefield {
         this.columns = columns;
         this.numberOfMines = numberOfMines;
         this.generateMinefieldMatrix();
+    }
 
-        for (Slot[] matrix : this.minefieldMatrix) {
-            for (int j = 0; j < this.minefieldMatrix.length; j++) {
-                this.howManyMinesAroundSlot(matrix[j]);
+    private void calculateNumberOfMinesAroundEachSlot() {
+        for (int row = 0; row < this.rows; row++) {
+            for (int column = 0; column < this.columns; column++) {
+                this.setNumberOfMinesAroundSlot(row, column);
             }
         }
     }
-
     public void activateSlot(int row, int column) {
-
-        getSlot(row-1, column-1).setStatus(true);
-
-    }
-
-    public boolean stillAlive(int row, int column){
-        return !minefieldMatrix[row-1][column-1].isThereAMine();
+        getSlot(row, column).setStatus(true);
     }
 
     public ExposedMatrix getMinefieldState() {
@@ -51,6 +48,7 @@ public class Minefield {
             }
         }
         this.placeMinesOnMinefield();
+        this.calculateNumberOfMinesAroundEachSlot();
     }
 
     private void placeMinesOnMinefield() {
@@ -60,13 +58,10 @@ public class Minefield {
                 minePlaces.add(new ArrayList<>(Arrays.asList(i, j)));
             }
         }
-
         int quantityOfSlots = this.rows * this.columns;
         int numberOfPlacedMines = 0;
         while (numberOfPlacedMines < this.numberOfMines) {
-
             ArrayList<Integer> randomMinePlace = minePlaces.get(randomNumber.nextInt(quantityOfSlots));
-
             Slot randomSlot = this.getSlot(randomMinePlace.get(0), randomMinePlace.get(1));
             randomSlot.setMine(true);
             minePlaces.remove(randomMinePlace);
@@ -79,60 +74,56 @@ public class Minefield {
         return this.minefieldMatrix[row][column];
     }
 
-    //------------------------------------------
-    public void howManyMinesAroundSlot(Slot slot) {
+    public void setNumberOfMinesAroundSlot(int row, int column) {
         int minesAround = 0;
+        int[][] positions = {
+                {row - 1, column - 1},
+                {row - 1, column},
+                {row - 1, column + 1},
+                {row, column - 1},
+                {row, column + 1},
+                {row + 1, column - 1},
+                {row + 1, column},
+                {row + 1, column + 1}
+        };
 
-        for (int i = 0; i < this.minefieldMatrix.length; i++) {
-            for (int j = 0; j < this.minefieldMatrix.length; j++) {
+        Slot slot = this.getSlot(row, column);
 
-                if (positionExists(i - 1, j - 1)) {
-                    if (this.minefieldMatrix[i - 1][j - 1].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
-                if (positionExists(i - 1, j)) {
-                    if (this.minefieldMatrix[i - 1][j].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
-                if (positionExists(i - 1, j + 1)) {
-                    if (this.minefieldMatrix[i - 1][j + 1].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
-                if (positionExists(i, j - 1)) {
-                    if (this.minefieldMatrix[i][j - 1].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
-                if (positionExists(i, j + 1)) {
-                    if (this.minefieldMatrix[i][j + 1].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
-                if (positionExists(i + 1, j - 1)) {
-                    if (this.minefieldMatrix[i + 1][j - 1].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
-                if (positionExists(i + 1, j)) {
-                    if (this.minefieldMatrix[i + 1][j].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
-                if (positionExists(i + 1, j + 1)) {
-                    if (this.minefieldMatrix[i + 1][j + 1].isThereAMine()) {
-                        minesAround += 1;
-                    }
-                }
+        for (int[] position : positions) {
+//            Slot selectedSlot = this.getSlot(position[0], position[1]);
+            if (positionExists(position[0], position[1])
+                    && this.getSlot(position[0], position[1]).isThereAMine()) {
+                minesAround += 1;
             }
         }
-
         slot.setHowManyMinesAroundMe(minesAround);
     }
 
-    private boolean positionExists(int row, int column) {
-        return row >= 0 && row < minefieldMatrix.length && column >= 0 && column < minefieldMatrix.length;
+    public boolean hasMineOnPosition(int row, int column) {
+        Slot slot = this.getSlot(row, column);
+        return slot.isThereAMine();
     }
+
+    private boolean positionExists(int row, int column) {
+        return row >=0 && row < rows && column >=0 && column < columns;
+    }
+
+//    public int[][] getPositionsAroundSlot(int row, int column) {
+//
+//        int[][] positions = {
+//                {row - 1, column - 1},
+//                {row - 1, column},
+//                {row - 1, column + 1},
+//                {row, column - 1},
+//                {row, column + 1},
+//                {row + 1, column - 1},
+//                {row + 1, column},
+//                {row + 1, column + 1}
+//        };
+//        positions = (int[][]) Arrays.stream(positions)
+//                .filter(x -> x[0] >= 0 && x[0] < rows && x[1] >=0 && x[1] < columns)
+//                .toArray();
+//
+//        return positions;
+//    }
 }

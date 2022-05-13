@@ -6,18 +6,18 @@ public class Slot {
 
     private boolean hasMine;
     private boolean status = false;
-    private Integer howManyMinesAroundMe;
+    private Integer numberOfMinesAround;
 
     public Slot(boolean content) {
         this.hasMine = content;
     }
 
-    public Integer getHowManyMinesAroundMe() {
-        return howManyMinesAroundMe;
+    public Integer getNumberOfMinesAround() {
+        return this.numberOfMinesAround;
     }
 
     public void setHowManyMinesAroundMe(Integer howManyMinesAroundMe) {
-        this.howManyMinesAroundMe = howManyMinesAroundMe;
+        this.numberOfMinesAround = howManyMinesAroundMe;
     }
 
     public boolean isThereAMine() {

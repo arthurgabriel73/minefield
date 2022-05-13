@@ -12,10 +12,11 @@ public class ExposedMatrix {
 
         for (int i = 0; i < minefield.length; i++) {
             for (int j = 0; j < minefield[0].length; j ++) {
-                if (!minefield[i][j].isOpen()) {
+                Slot selectedSlot = minefield[i][j];
+                if (!selectedSlot.isOpen()) {
                     this.matrix[i][j] = "C";
                 }
-                else this.matrix[i][j] = String.format("%d", minefield[i][j].getHowManyMinesAroundMe());
+                else this.matrix[i][j] = String.format("%d", minefield[i][j].getNumberOfMinesAround());
             }
         }
     }

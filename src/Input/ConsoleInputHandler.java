@@ -8,7 +8,6 @@ public class ConsoleInputHandler implements InputHandler{
 
     @Override
     public Config getGameConfig() {
-
         int rows = printMessageUntilIntegerIsPassed("Select the number of rows: ");
         int columns = printMessageUntilIntegerIsPassed("Select the number of columns: ");
         System.out.print("Select the number of mines to be set up on the field: ");

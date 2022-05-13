@@ -17,6 +17,7 @@ public class Program {
             while (game.isPlayerAlive()) {
                 game.actOnPlayerInput();
             }
+
         System.out.println("BOOOOOOM!!!!");
     }
 }

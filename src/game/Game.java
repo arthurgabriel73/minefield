@@ -28,13 +28,21 @@ public class Game {
     public void startGame() {
         Config config = this.inputHandler.getGameConfig();
         this.minefield = new Minefield(config.gameRows(), config.gameColumns(), config.numberOfMines());
+        this.renderCurrentGameState();
     }
 
     public void actOnPlayerInput() {
         Input input = this.inputHandler.getPlayerInput();
         this.minefield.activateSlot(input.selectedRow, input.selectedColumn);
-        this.isAlive = this.minefield.stillAlive(input.selectedRow, input.selectedColumn);
+        this.isAlive = !this.hasPlayerSteppedOnBomb(input);
+        this.renderCurrentGameState();
+    }
 
+    private boolean hasPlayerSteppedOnBomb(Input input) {
+        return this.minefield.hasMineOnPosition(input.selectedRow, input.selectedColumn);
+    }
+
+    private void renderCurrentGameState() {
         ExposedMatrix exposedMatrix = this.minefield.getMinefieldState();
         this.uiHandler.renderGame(exposedMatrix);
     }

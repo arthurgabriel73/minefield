@@ -5,14 +5,14 @@ public class ConsoleUIHandler implements UIHandler{
     @Override
     public void renderGame(ExposedMatrix exposedMatrix) {
         for (int i = 0; i < exposedMatrix.matrix.length; i++) {
-            System.out.print((i + 1) + " ");
+            System.out.print((i) + " ");
             for (int j = 0; j < exposedMatrix.matrix[0].length; j++) {
                 System.out.print(exposedMatrix.matrix[i][j] + " ");
             }
             System.out.println();
         }
         System.out.print("  ");
-        for(int i = 1; i<= exposedMatrix.matrix.length; i++) {
+        for(int i = 0; i < exposedMatrix.matrix.length; i++) {
 
             System.out.print(i + " ");
         }
