@@ -14,10 +14,8 @@ public class Program {
         UIHandler uiHandler = new ConsoleUIHandler();
         InputHandler inputHandler = new ConsoleInputHandler();
         Game game = new Game(inputHandler, uiHandler);
-            while (game.isPlayerAlive()) {
+            while (game.isPlayerAlive() && !game.findIfWeveGotAWinner()) {
                 game.actOnPlayerInput();
             }
-
-        System.out.println("BOOOOOOM!!!!");
     }
 }

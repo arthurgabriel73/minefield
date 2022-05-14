@@ -13,6 +13,7 @@ public class Minefield {
     private final int rows;
     private final int columns;
     private final int numberOfMines;
+    private boolean someoneEscaped;
     private Slot[][] minefieldMatrix;
 
     Random randomNumber = new Random();
@@ -128,5 +129,23 @@ public class Minefield {
                 this.revealPositionsAroundSlot(position[0], position[1]);
             }
         }
+    }
+
+    public boolean haveSomeoneEscaped() {
+        return findIfSomeoneEscaped();
+    }
+
+    private boolean findIfSomeoneEscaped() {
+        int availableSlots = 0;
+
+        for(int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Slot slot = minefieldMatrix[i][j];
+                if (!slot.isOpen() && !slot.isThereAMine()) {
+                    availableSlots += 1;
+                }
+            }
+        }
+        return availableSlots == 0;
     }
 }
