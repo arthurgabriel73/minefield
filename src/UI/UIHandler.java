@@ -4,7 +4,7 @@ public interface UIHandler {
 
     void renderGame(ExposedMatrix exposedMatrix);
 
-    void verifiesIfThePlayerHaveWon(boolean isWinner);
+    void renderGameOver();
 
-    void verifiesIfThePlayerHaveDied(boolean isAlive);
+    void renderWin();
 }

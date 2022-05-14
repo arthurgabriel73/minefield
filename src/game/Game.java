@@ -11,7 +11,6 @@ public class Game {
     private final InputHandler inputHandler;
     private final UIHandler uiHandler;
     private boolean isAlive;
-    private boolean weveGotAWinner;
 
     private Minefield minefield;
 
@@ -19,46 +18,48 @@ public class Game {
         this.isAlive = true;
         this.uiHandler = uiHandler;
         this.inputHandler = inputHandler;
-        this.startGame();
     }
 
     public boolean isPlayerAlive() {
         return this.isAlive;
     }
 
-    public boolean findIfWeveGotAWinner() {
-        return this.weveGotAWinner;
+    public Config getGameConfig() {
+        return this.inputHandler.getGameConfig();
     }
 
-    public void startGame() {
-        Config config = this.inputHandler.getGameConfig();
-        this.minefield = new Minefield(config.gameRows(), config.gameColumns(), config.numberOfMines());
+    public void startGame(Minefield minefield) {
+        this.minefield = minefield;
+        this.minefield.generateMinefieldMatrix();
         this.renderCurrentGameState();
     }
 
     public void actOnPlayerInput() {
         Input input = this.inputHandler.getPlayerInput();
         this.minefield.activateSlot(input.selectedRow, input.selectedColumn);
-        this.isAlive = !this.hasPlayerSteppedOnBomb(input);
+        this.isAlive = !this.hasPlayerSteppedOnMine(input);
         this.renderCurrentGameState();
-        this.verifiesIfTheGameHasEnd();
     }
 
-    private void verifiesIfTheGameHasEnd() {
-        if(!this.minefield.haveSomeoneEscaped()) {
-            this.uiHandler.verifiesIfThePlayerHaveDied(this.isAlive);
-        }
-
-        this.uiHandler.verifiesIfThePlayerHaveWon(this.minefield.haveSomeoneEscaped());
-        this.weveGotAWinner = this.minefield.haveSomeoneEscaped();
-    }
-
-    private boolean hasPlayerSteppedOnBomb(Input input) {
+    private boolean hasPlayerSteppedOnMine(Input input) {
         return this.minefield.hasMineOnPosition(input.selectedRow, input.selectedColumn);
     }
 
     private void renderCurrentGameState() {
         ExposedMatrix exposedMatrix = this.minefield.getMinefieldState();
         this.uiHandler.renderGame(exposedMatrix);
+    }
+
+    public boolean hasPlayerWon() {
+        return this.minefield.isMinefieldClear();
+    }
+
+    public void endGame() {
+        if (!this.isPlayerAlive()) {
+            this.uiHandler.renderGameOver();
+        }
+        if (this.hasPlayerWon()) {
+            this.uiHandler.renderWin();
+        }
     }
 }

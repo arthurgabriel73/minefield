@@ -13,7 +13,8 @@ public class Minefield {
     private final int rows;
     private final int columns;
     private final int numberOfMines;
-    private boolean someoneEscaped;
+    private final int totalNumberOfSlots;
+    private int numberOfOpenSlots = 0;
     private Slot[][] minefieldMatrix;
 
     Random randomNumber = new Random();
@@ -22,29 +23,10 @@ public class Minefield {
         this.rows = rows;
         this.columns = columns;
         this.numberOfMines = numberOfMines;
-        this.generateMinefieldMatrix();
+        this.totalNumberOfSlots = rows * columns;
     }
 
-    private void calculateNumberOfMinesAroundEachSlot() {
-        for (int row = 0; row < this.rows; row++) {
-            for (int column = 0; column < this.columns; column++) {
-                this.setNumberOfMinesAroundSlot(row, column);
-            }
-        }
-    }
-
-    public void activateSlot(int row, int column) {
-       Slot slot = getSlot(row, column).setStatus(true);
-       if (slot.getNumberOfMinesAround() == 0) {
-           this.revealPositionsAroundSlot(row, column);
-       }
-    }
-
-    public ExposedMatrix getMinefieldState() {
-        return new ExposedMatrix(this.minefieldMatrix);
-    }
-
-    private void generateMinefieldMatrix() {
+    public void generateMinefieldMatrix() {
         this.minefieldMatrix = new Slot[this.rows][this.columns];
         for (int i = 0; i < this.rows; i++) {
             for (int j = 0; j < this.columns; j++) {
@@ -74,6 +56,14 @@ public class Minefield {
         }
     }
 
+    private void calculateNumberOfMinesAroundEachSlot() {
+        for (int row = 0; row < this.rows; row++) {
+            for (int column = 0; column < this.columns; column++) {
+                this.setNumberOfMinesAroundSlot(row, column);
+            }
+        }
+    }
+
     private Slot getSlot(int row, int column) {
         return this.minefieldMatrix[row][column];
     }
@@ -94,6 +84,18 @@ public class Minefield {
         slot.setHowManyMinesAroundMe(minesAround);
     }
 
+    public void activateSlot(int row, int column) {
+        Slot slot = getSlot(row, column).setStatus(true);
+        this.numberOfOpenSlots += 1;
+        if (slot.getNumberOfMinesAround() == 0) {
+            this.revealPositionsAroundSlot(row, column);
+        }
+    }
+
+    public ExposedMatrix getMinefieldState() {
+        return new ExposedMatrix(this.minefieldMatrix);
+    }
+
     public boolean hasMineOnPosition(int row, int column) {
         Slot slot = this.getSlot(row, column);
         return slot.isThereAMine();
@@ -102,7 +104,7 @@ public class Minefield {
     private int[][] getPositionsAroundSlot(int row, int column) {
 
         int[][] defaultPositions = {
-                {(row - 1),( column - 1)},
+                {(row - 1), (column - 1)},
                 {(row - 1), (column)},
                 {(row - 1), (column + 1)},
                 {(row), (column - 1)},
@@ -112,40 +114,27 @@ public class Minefield {
                 {(row + 1), (column + 1)}
         };
 
-       return Stream.of(defaultPositions)
-                .filter(i -> i[0] >= 0 && i[0] < rows && i[1]>=0 && i[1] < columns)
+        return Stream.of(defaultPositions)
+                .filter(i -> i[0] >= 0 && i[0] < rows && i[1] >= 0 && i[1] < columns)
                 .toArray(int[][]::new);
     }
 
     private void revealPositionsAroundSlot(int row, int column) {
-        int[][] positionsAroundThisSlot = this.getPositionsAroundSlot(row, column) ;
+        int[][] positionsAroundThisSlot = this.getPositionsAroundSlot(row, column);
         for (int[] position : positionsAroundThisSlot) {
             Slot selectedSlot = this.getSlot(position[0], position[1]);
             if (selectedSlot.isThereAMine() || selectedSlot.isOpen()) {
                 continue;
             }
             selectedSlot.activate();
+            this.numberOfOpenSlots += 1;
             if (selectedSlot.getNumberOfMinesAround() == 0) {
                 this.revealPositionsAroundSlot(position[0], position[1]);
             }
         }
     }
 
-    public boolean haveSomeoneEscaped() {
-        return findIfSomeoneEscaped();
-    }
-
-    private boolean findIfSomeoneEscaped() {
-        int availableSlots = 0;
-
-        for(int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                Slot slot = minefieldMatrix[i][j];
-                if (!slot.isOpen() && !slot.isThereAMine()) {
-                    availableSlots += 1;
-                }
-            }
-        }
-        return availableSlots == 0;
+    public boolean isMinefieldClear() {
+        return this.numberOfOpenSlots == this.totalNumberOfSlots - this.numberOfMines;
     }
 }

@@ -20,18 +20,12 @@ public class ConsoleUIHandler implements UIHandler{
     }
 
     @Override
-    public void verifiesIfThePlayerHaveWon(boolean isWinner) {
-        if(isWinner) {
-            System.out.println("YOU ESCAPED!, see you next time...");
-        }
-
-
+    public void renderWin() {
+        System.out.println("THE MINEFIELD IS CLEAR!");
     }
 
     @Override
-    public void verifiesIfThePlayerHaveDied(boolean isAlive) {
-        if(!isAlive) {
+    public void renderGameOver() {
             System.out.println("YOU DIED!");
-        }
     }
 }
